@@ -79,30 +79,29 @@ const Home = () => {
   const handleInputAditional = (e) => {
     // Obtener el valor del input como cadena y convertirlo a número flotante
     let adicional = parseFloat(e.target.value);
-  
+
     // Verificar si el valor de adicional es NaN o no es un número válido
     if (isNaN(adicional)) {
       adicional = 0; // Establecer adicional como 0 si es NaN
     }
-  
+
     // Actualizar el estado 'adicional' con el valor obtenido
     setAdicional(adicional);
-  
+
     // Calcular el nuevo precio total sumando el total anterior y el adicional
     let precioTotal = totalPrecio + adicional;
-  
+
     // Verificar si el valor de totalPrecio es NaN o no es un número válido
     if (isNaN(precioTotal)) {
       precioTotal = 0; // Establecer precioTotal como 0 si es NaN
     }
-  
+
     // Actualizar el estado 'totalAdicional' con el nuevo precio total
     setTotalAdicional(precioTotal);
-  
+
     // Imprimir en la consola el valor del adicional
     console.log(adicional);
   };
-  
 
   const calcular = () => {
     console.log("Calculando...");
@@ -174,8 +173,8 @@ const Home = () => {
     setDobleFazPrecio(precioDobleFaz);
     setDobleFazColorPrecio(precioDobleFazColor);
     setTotalPrecio(precioTotal);
-    if(adicional !== 0 || !isNaN(adicional)){
-      setTotalAdicional(precioTotal + adicional)
+    if (adicional !== 0 || !isNaN(adicional)) {
+      setTotalAdicional(precioTotal + adicional);
     }
   };
 
@@ -214,15 +213,15 @@ const Home = () => {
 
         {elementos.length > 0 && (
           <div className="mt-4 overflow-x-auto w-full">
-            <table className="table-auto w-full border-collapse border border-gray-200">
-              <thead>
+            <table className="table-auto w-full border-collapse ">
+              <thead className="">
                 <tr className="bg-[rgb(19,138,152)] text-white">
-                  <th className="border border-gray-200 p-2 rounded-tl-md">
+                  <th className=" p-2 rounded-tl-md">
                     Cantidad de Hojas
                   </th>
                   <th className="border border-gray-200 p-2">Color</th>
                   <th className="border border-gray-200 p-2">Simple faz</th>
-                  <th className="border border-gray-200 p-2 rounded-tr-md">
+                  <th className=" p-2 rounded-tr-md">
                     Acciones
                   </th>
                 </tr>
@@ -239,7 +238,7 @@ const Home = () => {
                         onChange={() => handleCheckboxChangeColor(index)}
                       />
                     </td>
-                    <td className="border border-gray-200 p-2">
+                    <td className="border  p-2">
                       <input
                         type="checkbox"
                         id={`simpleFaz-${index}`}
@@ -247,16 +246,16 @@ const Home = () => {
                         onChange={() => handleCheckboxChangeSimpleFaz(index)}
                       />
                     </td>
-                    <td className="border border-gray-200 p-2 flex justify-center">
+                    <td className=" p-2 flex justify-center">
                       <button
                         onClick={() => editarElemento(index)}
-                        className="bg-blue-500 text-white p-1 rounded-md mr-2 hover:bg-blue-700 px-2"
+                        className="bg-blue-500 text-white  rounded-md mr-2 hover:bg-blue-700 px-2"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => eliminarElemento(index)}
-                        className="bg-red-500 text-white p-1 rounded-md hover:bg-red-700 px-2"
+                        className="bg-red-500 text-white rounded-md hover:bg-red-700 px-2"
                       >
                         Eliminar
                       </button>
@@ -284,45 +283,64 @@ const Home = () => {
               Total de hojas: {totalHojas}
             </p>
             {simpleFaz !== 0 && (
-              <p className="">Cantidad de hojas simple faz en <span className=" font-bold">blanco y negro</span>
-              : {simpleFaz}</p>
+              <p className="">
+                Cantidad de hojas simple faz en{" "}
+                <span className=" font-bold">blanco y negro</span>: {simpleFaz}
+              </p>
             )}
             {dobleFaz !== 0 && (
-              <p className="">Cantidad de hojas doble faz en  <span className=" font-bold">blanco y negro</span>: {dobleFaz}</p>
+              <p className="">
+                Cantidad de hojas doble faz en{" "}
+                <span className=" font-bold">blanco y negro</span>: {dobleFaz}
+              </p>
             )}
             {simpleFazColor !== 0 && (
-              <p className="">Cantidad de hojas simple faz a <span className="text-red-500 font-bold">color</span>: {simpleFazColor}</p>
+              <p className="">
+                Cantidad de hojas simple faz a{" "}
+                <span className="text-red-500 font-bold">color</span>:{" "}
+                {simpleFazColor}
+              </p>
             )}
             {dobleFazColor !== 0 && (
-            
-              <p className="">Cantidad de hojas doble faz a <span className="text-red-500 font-bold">color</span>: {dobleFazColor}</p>
+              <p className="">
+                Cantidad de hojas doble faz a{" "}
+                <span className="text-red-500 font-bold">color</span>:{" "}
+                {dobleFazColor}
+              </p>
             )}
             <p className=" text-lg font-semibold">Precios individuales</p>
 
             {simpleFazPrecio !== 0 && (
               <p className="">
-                Precio simple faz  <span className=" font-bold">blanco y negro</span>: ${simpleFazPrecio}
+                Precio simple faz{" "}
+                <span className=" font-bold">blanco y negro</span>: $
+                {simpleFazPrecio}
               </p>
             )}
             {dobleFazPrecio !== 0 && (
               <p className="">
-                Precio doble faz  <span className=" font-bold">blanco y negro</span>: ${dobleFazPrecio}
+                Precio doble faz{" "}
+                <span className=" font-bold">blanco y negro</span>: $
+                {dobleFazPrecio}
               </p>
             )}
             {simpleFazColorPrecio !== 0 && (
               <p className="">
-                Precio simple faz <span className="text-red-500 font-bold">color</span>: ${simpleFazColorPrecio}
+                Precio simple faz{" "}
+                <span className="text-red-500 font-bold">color</span>: $
+                {simpleFazColorPrecio}
               </p>
             )}
             {dobleFazColorPrecio !== 0 && (
-              <p className="">Precio doble faz <span className="text-red-500 font-bold">color</span>: ${dobleFazColorPrecio}</p>
+              <p className="">
+                Precio doble faz{" "}
+                <span className="text-red-500 font-bold">color</span>: $
+                {dobleFazColorPrecio}
+              </p>
             )}
 
             <div className="mb-4 gap-2 flex flex-col w-full">
-              <label
-                htmlFor="adicional"
-                className="text-lg font-semibold flex"
-              >
+              <label htmlFor="adicional" className="text-lg font-semibold flex">
                 Precio adicional
               </label>
               <div className="relative flex items-center">
