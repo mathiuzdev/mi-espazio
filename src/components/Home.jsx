@@ -18,6 +18,8 @@ const Home = () => {
   const [simpleFazColorPrecio, setSimpleFazColorPrecio] = useState(0);
   const [dobleFazColorPrecio, setDobleFazColorPrecio] = useState(0);
   const [totalPrecio, setTotalPrecio] = useState(0);
+  const [adicional, setAdicional] = useState(0);
+  const [totalAdicional, setTotalAdicional] = useState(0);
   const handleInputChange = (e) => {
     setNuevoElemento(e.target.value);
   };
@@ -72,6 +74,14 @@ const Home = () => {
     setCheckboxesSimpleFaz(nuevosCheckboxesSimpleFaz);
     setContador(contador - 1);
     setTotalHojas(0);
+  };
+
+  const handleInputAditional = (e) => {
+    let adicional = parseFloat(e.target.value);
+    setAdicional(adicional);
+    let precioTotal = totalPrecio + parseFloat(adicional);
+    setTotalAdicional(precioTotal);
+    console.log(adicional);
   };
 
   const calcular = () => {
@@ -144,6 +154,9 @@ const Home = () => {
     setDobleFazPrecio(precioDobleFaz);
     setDobleFazColorPrecio(precioDobleFazColor);
     setTotalPrecio(precioTotal);
+    if(adicional !== 0 || !isNaN(adicional)){
+      setTotalAdicional(precioTotal + adicional)
+    }
   };
 
   useEffect(() => {
@@ -154,7 +167,7 @@ const Home = () => {
     }
   }, []);
   return (
-    <main className="flex bg-[rgb(232,246,248)] min-h-screen flex-col text-center">
+    <main className="flex flex-col text-center z-10 relative  ">
       <div className="flex flex-col gap-4 px-4 pt-4">
         <p className="text-[rgb(19,138,152)] text-xl font-bold">
           Calculadora de precios
@@ -168,11 +181,13 @@ const Home = () => {
           name="agregar"
           value={nuevoElemento}
           onChange={handleInputChange}
+          onKeyUp={(e) => e.key === "Enter" && agregarElemento()}
           className="border-2 solid outline-none p-2 rounded-md"
+          placeholder="Cantidad de hojas"
         />
         <button
           onClick={agregarElemento}
-          className="bg-[rgb(19,138,152)] text-white p-2 rounded-md font-semibold"
+          className="bg-[rgb(19,138,152)] text-white p-2 rounded-md font-semibold hover:bg-[rgb(36,86,92)]"
         >
           {editandoIndex !== null ? "Guardar" : "Agregar"}
         </button>
@@ -215,13 +230,13 @@ const Home = () => {
                     <td className="border border-gray-200 p-2 flex justify-center">
                       <button
                         onClick={() => editarElemento(index)}
-                        className="bg-blue-500 text-white p-1 rounded-md mr-2"
+                        className="bg-blue-500 text-white p-1 rounded-md mr-2 hover:bg-blue-700 px-2"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => eliminarElemento(index)}
-                        className="bg-red-500 text-white p-1 rounded-md"
+                        className="bg-red-500 text-white p-1 rounded-md hover:bg-red-700 px-2"
                       >
                         Eliminar
                       </button>
@@ -249,41 +264,69 @@ const Home = () => {
               Total de hojas: {totalHojas}
             </p>
             {simpleFaz !== 0 && (
-              <p className="">Simple faz blanco y negro: {simpleFaz}</p>
+              <p className="">Cantidad de hojas simple faz en <span className=" font-bold">blanco y negro</span>
+              : {simpleFaz}</p>
             )}
             {dobleFaz !== 0 && (
-              <p className="">Doble faz blanco y negro: {dobleFaz}</p>
+              <p className="">Cantidad de hojas doble faz en  <span className=" font-bold">blanco y negro</span>: {dobleFaz}</p>
             )}
             {simpleFazColor !== 0 && (
-              <p className="">Simple faz color: {simpleFazColor}</p>
+              <p className="">Cantidad de hojas simple faz a <span className="text-red-500 font-bold">color</span>: {simpleFazColor}</p>
             )}
             {dobleFazColor !== 0 && (
-              <p className="">Doble faz color: {dobleFazColor}</p>
+            
+              <p className="">Cantidad de hojas doble faz a <span className="text-red-500 font-bold">color</span>: {dobleFazColor}</p>
             )}
-
             <p className=" text-lg font-semibold">Precios individuales</p>
 
             {simpleFazPrecio !== 0 && (
               <p className="">
-                Precio simple faz blanco y negro: ${simpleFazPrecio}
+                Precio simple faz  <span className=" font-bold">blanco y negro</span>: ${simpleFazPrecio}
               </p>
             )}
             {dobleFazPrecio !== 0 && (
               <p className="">
-                Precio doble faz blanco y negro: ${dobleFazPrecio}
+                Precio doble faz  <span className=" font-bold">blanco y negro</span>: ${dobleFazPrecio}
               </p>
             )}
             {simpleFazColorPrecio !== 0 && (
               <p className="">
-                Precio simple faz color: ${simpleFazColorPrecio}
+                Precio simple faz <span className="text-red-500 font-bold">color</span>: ${simpleFazColorPrecio}
               </p>
             )}
             {dobleFazColorPrecio !== 0 && (
-              <p className="">Precio doble faz color: ${dobleFazColorPrecio}</p>
+              <p className="">Precio doble faz <span className="text-red-500 font-bold">color</span>: ${dobleFazColorPrecio}</p>
             )}
+
+            <div className="mb-4 gap-2 flex flex-col w-full">
+              <label
+                htmlFor="adicional"
+                className="text-lg font-semibold flex"
+              >
+                Precio adicional
+              </label>
+              <div className="relative flex items-center">
+                <span className="absolute bg-[rgb(36,86,92)]  h-full flex items-center px-4 rounded-l-md font-bold text-white">
+                  $
+                </span>
+                <input
+                  type="text"
+                  placeholder="Precio adicional"
+                  value={parseFloat(adicional)}
+                  onChange={handleInputAditional}
+                  className="p-2 pl-14 w-full rounded-md text-black outline-none"
+                />
+              </div>
+            </div>
+
             <p className=" text-xl font-bold w-full px-auto pt-2">
               Precio total: ${totalPrecio}
             </p>
+            {adicional !== 0 && !isNaN(adicional) && (
+              <p className=" text-xl font-bold w-full px-auto pt-2">
+                Precio total con adicional: ${totalAdicional}
+              </p>
+            )}
           </div>
         )}
       </div>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const Header = () => {
   const [clickMenu, setClickMenu] = useState(false);
-
+  const [guardado, setGuardado] = useState(false);
     const handleClick = () => {
         setClickMenu(!clickMenu);
     }
@@ -38,6 +38,10 @@ const Header = () => {
   
       // Guardar precios en localStorage
       localStorage.setItem("precios", JSON.stringify({ sfb: parsedSfb, dfb: parsedDfb, sfc: parsedSfc, dfc: parsedDfc }));
+        setGuardado(true);
+        setTimeout(() => {
+          setGuardado(false);
+        }, 2000);
     };
 
     useEffect(() => {
@@ -52,19 +56,19 @@ const Header = () => {
       }, []);
   return (
     <>
-    <header className="text-red-500 flex justify-between items-center px-4 py-2 shadow-xl">
+    <header className="text-red-500 flex justify-between items-center px-4 py-2 relative shadow-xl z-50 bg-white">
         <img src="/img/logo1.jpg" alt="" className="w-26 h-16"/>
         <button className="text-xl text-[rgb(19,138,152)] font-bold" onClick={handleClick}>Precios</button>
     </header>
     {clickMenu && (
-        <div className="bg-[rgb(19,138,152)] text-white p-2  font-semibold absolute min-h-screen w-full">
+        <div className="bg-[rgb(19,138,152)] text-white p-2  font-semibold absolute h-full top-0  pt-28 z-20  w-full">
  <div className="max-w-full mx-auto  p-4 rounded-md flex flex-col gap-4">
-      <h1 className="text-center font-bold pt-2 text-xl">
+      <h1 className="text-center font-bold pt-2 text-[25px]">
         Escriba los precios por unidad
       </h1>
 
       <div className="mb-4">
-        <label htmlFor="sfb">Simple faz blanco y negro</label>
+        <label htmlFor="sfb" className="text-lg font-semibold">Simple faz blanco y negro</label>
         <div className="relative flex items-center">
           <span className="absolute bg-[rgb(36,86,92)]  h-full flex items-center px-4 rounded-l-md font-bold">$</span>
           <input
@@ -78,7 +82,7 @@ const Header = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="dfb">Doble faz blanco y negro</label>
+        <label htmlFor="dfb" className="text-lg font-semibold">Doble faz blanco y negro</label>
         <div className="relative flex items-center">
           <span className="absolute bg-[rgb(36,86,92)]  h-full flex items-center px-4 rounded-l-md font-bold">$</span>
           <input
@@ -92,7 +96,7 @@ const Header = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="sfc">Simple faz color</label>
+        <label htmlFor="sfc" className="text-lg font-semibold">Simple faz color</label>
         <div className="relative flex items-center">
           <span className="absolute bg-[rgb(36,86,92)]  h-full flex items-center px-4 rounded-l-md font-bold">$</span>
           <input
@@ -106,7 +110,7 @@ const Header = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="dfc">Doble faz color</label>
+        <label htmlFor="dfc" className="text-lg font-semibold">Doble faz color</label>
         <div className="relative flex items-center">
           <span className="absolute bg-[rgb(36,86,92)]  h-full flex items-center px-4 rounded-l-md font-bold">$</span>
           <input
@@ -125,6 +129,8 @@ const Header = () => {
       >
         Guardar precios
       </button>
+      {guardado && <p className="font-bold">Precios guardados</p>}
+    
     </div>
         </div>
     )}
