@@ -77,12 +77,32 @@ const Home = () => {
   };
 
   const handleInputAditional = (e) => {
+    // Obtener el valor del input como cadena y convertirlo a número flotante
     let adicional = parseFloat(e.target.value);
+  
+    // Verificar si el valor de adicional es NaN o no es un número válido
+    if (isNaN(adicional)) {
+      adicional = 0; // Establecer adicional como 0 si es NaN
+    }
+  
+    // Actualizar el estado 'adicional' con el valor obtenido
     setAdicional(adicional);
-    let precioTotal = totalPrecio + parseFloat(adicional);
+  
+    // Calcular el nuevo precio total sumando el total anterior y el adicional
+    let precioTotal = totalPrecio + adicional;
+  
+    // Verificar si el valor de totalPrecio es NaN o no es un número válido
+    if (isNaN(precioTotal)) {
+      precioTotal = 0; // Establecer precioTotal como 0 si es NaN
+    }
+  
+    // Actualizar el estado 'totalAdicional' con el nuevo precio total
     setTotalAdicional(precioTotal);
+  
+    // Imprimir en la consola el valor del adicional
     console.log(adicional);
   };
+  
 
   const calcular = () => {
     console.log("Calculando...");
@@ -312,7 +332,7 @@ const Home = () => {
                 <input
                   type="text"
                   placeholder="Precio adicional"
-                  value={parseFloat(adicional)}
+                  value={adicional}
                   onChange={handleInputAditional}
                   className="p-2 pl-14 w-full rounded-md text-black outline-none"
                 />
